@@ -1,0 +1,34 @@
+name: Weather App CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: mini-project-react/package-lock.json
+
+      - name: Install dependencies
+        working-directory: mini-project-react
+        run: npm ci
+
+      - name: Build application
+        working-directory: mini-project-react
+        run: npm run build
